@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-
 import java.time.Instant;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -18,19 +16,14 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class Comment 
+@Table(name= "token")
+public class Verification 
 {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	private Long id;
-	@NotEmpty
-	private String text;
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "postId", referencedColumnName = "postId")
-	private Post post;
-	private Instant createdDate;
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "userId", referencedColumnName = "userId")
+	private long id;
+	private String token;
+	@OneToOne(fetch = LAZY)
 	private User user;
+	private Instant expireDate;
 }
