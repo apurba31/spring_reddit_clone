@@ -1,6 +1,7 @@
 package service;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dto.RegisterRequest;
+import exceptions.SpringRedditException;
 import model.NotificationMail;
 import model.User;
 import model.VerificationToken;
@@ -55,5 +57,19 @@ public class AuthService
 		
 		verificationTokenRepository.save(verificationToken);
 		return token;
+	}
+	
+	public void verifyAccount(String token)
+	{
+		Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
+		verificationToken.orElseThrow(() -> new SpringRedditException("Invalid Token"));
+		fetchUserAndEnable(verificationToken.get());
+	}
+
+	private void fetchUserAndEnable(VerificationToken verificationToken) {
+		verificationToken.getUser().getUserName();
+		User user = userRepository.findByUsername(user).orElseThrow(()-> new SpringRedditException("User not found with Name "+ username));
+		user.setEnabled(true);
+		userRepository.save(user);
 	}
 }

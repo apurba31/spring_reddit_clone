@@ -23,7 +23,7 @@ public class User
 	@GeneratedValue(strategy = IDENTITY)
 	private Long userId;
 	@NotBlank(message = "Username is required")
-	private String userName;
+	private String username;
 	@NotBlank(message = "Password is required")
 	private String password;
 	@Email
@@ -38,10 +38,10 @@ public class User
 		this.userId = userId;
 	}
 	public String getUserName() {
-		return userName;
+		return username;
 	}
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.username = userName;
 	}
 	public String getPassword() {
 		return password;
