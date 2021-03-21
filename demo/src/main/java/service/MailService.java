@@ -5,6 +5,8 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import exceptions.SpringRedditException;
 import jdk.internal.org.jline.utils.Log;
@@ -15,11 +17,13 @@ import model.NotificationMail;
 @Service
 @AllArgsConstructor
 @Slf4j
+@Component
 public class MailService 
 {
 	private final JavaMailSender mailSender;
 	private final MailContentBuilder mailContentBuilder;
 	
+	@Async
 	public void sendMail(NotificationMail notificationEmail)
 	{
 		MimeMessagePreparator messagePreparator = mimeMessage -> {

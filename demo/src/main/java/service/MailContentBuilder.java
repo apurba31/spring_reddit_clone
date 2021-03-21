@@ -1,5 +1,6 @@
 package service;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -8,6 +9,7 @@ import org.thymeleaf.TemplateEngine;
 
 @Service
 @AllArgsConstructor
+@Component
 public class MailContentBuilder 
 {
 	private final TemplateEngine templateEngine = new TemplateEngine();
